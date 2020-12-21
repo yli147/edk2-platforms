@@ -19,8 +19,8 @@
 ################################################################################
 
 [FD.STANDALONE_MM]
-BaseAddress   = 0x20001000|gArmTokenSpaceGuid.PcdFdBaseAddress
-Size          = 0x00e00000|gArmTokenSpaceGuid.PcdFdSize # The size in bytes of the device (14MiB).
+BaseAddress   = 0x20001000
+Size          = 0x00e00000
 ErasePolarity = 1
 
 BlockSize     = 0x00001000
@@ -49,6 +49,9 @@ READ_LOCK_CAP      = TRUE
 READ_LOCK_STATUS   = TRUE
 
   INF StandaloneMmPkg/Core/StandaloneMmCore.inf
+  INF ArmPlatformPkg/Drivers/NorFlashDxe/NorFlashStandaloneMm.inf
+  INF MdeModulePkg/Universal/FaultTolerantWriteDxe/FaultTolerantWriteStandaloneMm.inf
+  INF MdeModulePkg/Universal/Variable/RuntimeDxe/VariableStandaloneMm.inf
   INF StandaloneMmPkg/Drivers/StandaloneMmCpu/AArch64/StandaloneMmCpu.inf
 
 ################################################################################

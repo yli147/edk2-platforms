@@ -40,6 +40,8 @@
   gArmTokenSpaceGuid.PcdSystemMemoryBase
   gArmTokenSpaceGuid.PcdSystemMemorySize
   gArmVirtSbsaQemuPlatformTokenSpaceGuid.PcdDeviceTreeBaseAddress
+  gArmTokenSpaceGuid.PcdMmBufferBase
+  gArmTokenSpaceGuid.PcdMmBufferSize
 
 [FixedPcd]
   gArmTokenSpaceGuid.PcdFdBaseAddress

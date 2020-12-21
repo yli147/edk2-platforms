@@ -77,6 +77,19 @@
   HobLib|StandaloneMmPkg/Library/StandaloneMmHobLib/StandaloneMmHobLib.inf
   MmServicesTableLib|MdePkg/Library/StandaloneMmServicesTableLib/StandaloneMmServicesTableLib.inf
   MemoryAllocationLib|StandaloneMmPkg/Library/StandaloneMmMemoryAllocationLib/StandaloneMmMemoryAllocationLib.inf
+  AuthVariableLib|SecurityPkg/Library/AuthVariableLib/AuthVariableLib.inf
+  BaseCryptLib|CryptoPkg/Library/BaseCryptLib/SmmCryptLib.inf
+  IntrinsicLib|CryptoPkg/Library/IntrinsicLib/IntrinsicLib.inf
+  NorFlashPlatformLib|Silicon/Qemu/SbsaQemu/Library/SbsaQemuNorFlashLib/SbsaQemuNorFlashLib.inf
+  OpensslLib|CryptoPkg/Library/OpensslLib/OpensslLib.inf
+  RngLib|MdePkg/Library/BaseRngLibTimerLib/BaseRngLibTimerLib.inf
+  PlatformSecureLib|SecurityPkg/Library/PlatformSecureLibNull/PlatformSecureLibNull.inf
+  SynchronizationLib|MdePkg/Library/BaseSynchronizationLib/BaseSynchronizationLib.inf
+  TimerLib|ArmPkg/Library/ArmArchTimerLib/ArmArchTimerLib.inf
+  TimerLib|MdePkg/Library/BaseTimerLibNullTemplate/BaseTimerLibNullTemplate.inf
+  VarCheckLib|MdeModulePkg/Library/VarCheckLib/VarCheckLib.inf
+  SafeIntLib|MdePkg/Library/BaseSafeIntLib/BaseSafeIntLib.inf
+  ArmGenericTimerCounterLib|ArmPkg/Library/ArmGenericTimerPhyCounterLib/ArmGenericTimerPhyCounterLib.inf
 
 ################################################################################
 #
@@ -93,6 +106,20 @@
   gEfiMdePkgTokenSpaceGuid.PcdUartDefaultBaudRate|115200
 
   gEfiMdePkgTokenSpaceGuid.PcdMaximumGuidedExtractHandler|0x2
+
+  gArmTokenSpaceGuid.PcdFdBaseAddress|0x01000000
+  gArmTokenSpaceGuid.PcdFdSize|0x000C0000
+
+  gEfiMdeModulePkgTokenSpaceGuid.PcdMaxVariableSize|0x2000
+  gEfiSecurityPkgTokenSpaceGuid.PcdUserPhysicalPresence|TRUE
+  gEfiMdeModulePkgTokenSpaceGuid.PcdMaxAuthVariableSize|0x2800
+
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableBase|0x01000000
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableSize|0x00040000
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingBase|0x01040000
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingSize|0x00040000
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareBase|0x01080000
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareSize|0x00040000
 
 ###################################################################################################
 #
@@ -118,6 +145,19 @@
   #
   StandaloneMmPkg/Core/StandaloneMmCore.inf
   StandaloneMmPkg/Drivers/StandaloneMmCpu/AArch64/StandaloneMmCpu.inf
+  ArmPlatformPkg/Drivers/NorFlashDxe/NorFlashStandaloneMm.inf
+  MdeModulePkg/Universal/FaultTolerantWriteDxe/FaultTolerantWriteStandaloneMm.inf
+
+  MdeModulePkg/Universal/Variable/RuntimeDxe/VariableStandaloneMm.inf {
+    <LibraryClasses>
+      DevicePathLib|MdePkg/Library/UefiDevicePathLib/UefiDevicePathLib.inf
+      NULL|MdeModulePkg/Library/VarCheckUefiLib/VarCheckUefiLib.inf
+      NULL|MdeModulePkg/Library/VarCheckPolicyLib/VarCheckPolicyLibStandaloneMm.inf
+      # don't use unaligned CopyMem () on the UEFI varstore NOR flash region
+      BaseMemoryLib|MdePkg/Library/BaseMemoryLib/BaseMemoryLib.inf
+      VariablePolicyLib|MdeModulePkg/Library/VariablePolicyLib/VariablePolicyLib.inf
+      VariablePolicyHelperLib|MdeModulePkg/Library/VariablePolicyHelperLib/VariablePolicyHelperLib.inf
+  }
 
 ###################################################################################################
 #

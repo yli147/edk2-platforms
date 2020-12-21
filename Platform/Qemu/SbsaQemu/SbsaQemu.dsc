@@ -27,6 +27,8 @@
 
   DEFINE DEBUG_PRINT_ERROR_LEVEL = 0x8000004F
 
+  DEFINE SECURE_BOOT_ENABLE      = FALSE
+
 #
 # Network definition
 #
@@ -148,12 +150,10 @@ DEFINE NETWORK_HTTP_BOOT_ENABLE       = FALSE
   # Secure Boot dependencies
   #
   TpmMeasurementLib|SecurityPkg/Library/DxeTpmMeasurementLib/DxeTpmMeasurementLib.inf
-  AuthVariableLib|SecurityPkg/Library/AuthVariableLib/AuthVariableLib.inf
 
   # re-use the UserPhysicalPresent() dummy implementation from the ovmf tree
   PlatformSecureLib|OvmfPkg/Library/PlatformSecureLib/PlatformSecureLib.inf
 
-  VarCheckLib|MdeModulePkg/Library/VarCheckLib/VarCheckLib.inf
   VariablePolicyLib|MdeModulePkg/Library/VariablePolicyLib/VariablePolicyLib.inf
   VariablePolicyHelperLib|MdeModulePkg/Library/VariablePolicyHelperLib/VariablePolicyHelperLib.inf
 
@@ -167,6 +167,7 @@ DEFINE NETWORK_HTTP_BOOT_ENABLE       = FALSE
   ArmPlatformLib|ArmPlatformPkg/Library/ArmPlatformLibNull/ArmPlatformLibNull.inf
 
   TimerLib|ArmPkg/Library/ArmArchTimerLib/ArmArchTimerLib.inf
+
   NorFlashPlatformLib|Silicon/Qemu/SbsaQemu/Library/SbsaQemuNorFlashLib/SbsaQemuNorFlashLib.inf
 
   CapsuleLib|MdeModulePkg/Library/DxeCapsuleLibNull/DxeCapsuleLibNull.inf
@@ -295,6 +296,8 @@ DEFINE NETWORK_HTTP_BOOT_ENABLE       = FALSE
   #  It could be set FALSE to save size.
   gEfiMdeModulePkgTokenSpaceGuid.PcdConOutGopSupport|TRUE
   gEfiMdeModulePkgTokenSpaceGuid.PcdConOutUgaSupport|FALSE
+
+  gEfiMdeModulePkgTokenSpaceGuid.PcdEnableVariableRuntimeCache|FALSE
 
 [PcdsFixedAtBuild.common]
   gEfiMdePkgTokenSpaceGuid.PcdMaximumUnicodeStringLength|1000000
@@ -511,6 +514,10 @@ DEFINE NETWORK_HTTP_BOOT_ENABLE       = FALSE
   gEfiMdeModulePkgTokenSpaceGuid.PcdSmbiosVersion|0x0300
   gEfiMdeModulePkgTokenSpaceGuid.PcdSmbiosDocRev|0x0
 
+  gArmTokenSpaceGuid.PcdMmBufferBase|0x10000000000
+  gArmTokenSpaceGuid.PcdMmBufferSize|0x00200000
+
+
 ################################################################################
 #
 # Components Section - list of all EDK II Modules needed by this Platform
@@ -564,7 +571,6 @@ DEFINE NETWORK_HTTP_BOOT_ENABLE       = FALSE
   ArmPlatformPkg/MemoryInitPei/MemoryInitPeim.inf
   ArmPkg/Drivers/CpuPei/CpuPei.inf
 
-
   MdeModulePkg/Core/DxeIplPeim/DxeIpl.inf {
     <LibraryClasses>
       NULL|MdeModulePkg/Library/LzmaCustomDecompressLib/LzmaCustomDecompressLib.inf
@@ -588,23 +594,39 @@ DEFINE NETWORK_HTTP_BOOT_ENABLE       = FALSE
   #
   ArmPkg/Drivers/CpuDxe/CpuDxe.inf
   MdeModulePkg/Core/RuntimeDxe/RuntimeDxe.inf
-  MdeModulePkg/Universal/Variable/RuntimeDxe/VariableRuntimeDxe.inf {
-    <LibraryClasses>
-      NULL|MdeModulePkg/Library/VarCheckUefiLib/VarCheckUefiLib.inf
-      # don't use unaligned CopyMem () on the UEFI varstore NOR flash region
-      BaseMemoryLib|MdePkg/Library/BaseMemoryLib/BaseMemoryLib.inf
-  }
   MdeModulePkg/Universal/SecurityStubDxe/SecurityStubDxe.inf {
     <LibraryClasses>
+!if $(SECURE_BOOT_ENABLE) == TRUE
       NULL|SecurityPkg/Library/DxeImageVerificationLib/DxeImageVerificationLib.inf
+!endif
   }
-  SecurityPkg/VariableAuthenticated/SecureBootConfigDxe/SecureBootConfigDxe.inf
   MdeModulePkg/Universal/CapsuleRuntimeDxe/CapsuleRuntimeDxe.inf
-  MdeModulePkg/Universal/FaultTolerantWriteDxe/FaultTolerantWriteDxe.inf
   MdeModulePkg/Universal/MonotonicCounterRuntimeDxe/MonotonicCounterRuntimeDxe.inf
   MdeModulePkg/Universal/ResetSystemRuntimeDxe/ResetSystemRuntimeDxe.inf
   EmbeddedPkg/RealTimeClockRuntimeDxe/RealTimeClockRuntimeDxe.inf
   EmbeddedPkg/MetronomeDxe/MetronomeDxe.inf
+
+  #
+  # Variable services
+  #
+!if $(SECURE_BOOT_ENABLE) == FALSE
+  MdeModulePkg/Universal/FaultTolerantWriteDxe/FaultTolerantWriteDxe.inf
+  MdeModulePkg/Universal/Variable/RuntimeDxe/VariableRuntimeDxe.inf {
+    <LibraryClasses>
+      NULL|MdeModulePkg/Library/VarCheckUefiLib/VarCheckUefiLib.inf
+      AuthVariableLib|MdeModulePkg/Library/AuthVariableLibNull/AuthVariableLibNull.inf
+      VarCheckLib|MdeModulePkg/Library/VarCheckLib/VarCheckLib.inf
+      # don't use unaligned CopyMem () on the UEFI varstore NOR flash region
+      BaseMemoryLib|MdePkg/Library/BaseMemoryLib/BaseMemoryLib.inf
+  }
+!else
+  ArmPkg/Drivers/MmCommunicationDxe/MmCommunication.inf {
+    <LibraryClasses>
+      NULL|StandaloneMmPkg/Library/VariableMmDependency/VariableMmDependency.inf
+  }
+  MdeModulePkg/Universal/Variable/RuntimeDxe/VariableSmmRuntimeDxe.inf
+  SecurityPkg/VariableAuthenticated/SecureBootConfigDxe/SecureBootConfigDxe.inf
+!endif
 
   MdeModulePkg/Universal/Console/ConPlatformDxe/ConPlatformDxe.inf
   MdeModulePkg/Universal/Console/ConSplitterDxe/ConSplitterDxe.inf

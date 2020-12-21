@@ -25,15 +25,20 @@ SbsaQemuLibConstructor (
 {
   VOID          *DeviceTreeBase;
   INT32         Node, Prev;
-  UINT64        NewBase, CurBase;
+  UINT64        NewBase, CurBase, NsBufBase;
   UINT64        NewSize, CurSize;
+  UINT32        NsBufSize;
   CONST CHAR8   *Type;
   INT32         Len;
   CONST UINT64  *RegProp;
   RETURN_STATUS PcdStatus;
+  INT32         ParentOffset;
+  INT32         Offset;
 
   NewBase = 0;
   NewSize = 0;
+  NsBufBase = 0;
+  NsBufSize = 0;
 
   DeviceTreeBase = (VOID *)(UINTN)PcdGet64 (PcdDeviceTreeBaseAddress);
   ASSERT (DeviceTreeBase != NULL);
@@ -73,9 +78,39 @@ SbsaQemuLibConstructor (
     }
   }
 
+  // StandaloneMM non-secure shared buffer is allocated at the top of
+  // the system memory by trusted-firmware using "/reserved-memory" node.
+  ParentOffset = fdt_path_offset(DeviceTreeBase, "/reserved-memory");
+  if (ParentOffset < 0) {
+    DEBUG ((DEBUG_ERROR, "%a: reserved-memory node not found\n",
+      __FUNCTION__));
+  }
+  Offset = fdt_subnode_offset(DeviceTreeBase, ParentOffset, "ns-buf-spm-mm");
+  if (Offset < 0) {
+    DEBUG ((DEBUG_ERROR, "%a: ns-buf-spm-mm node not found\n",
+      __FUNCTION__));
+  }
+  // Get the 'reg' property of this node. 8 byte quantities for base address
+  // and 4 byte quantities for size.
+  RegProp = fdt_getprop (DeviceTreeBase, Offset, "reg", &Len);
+  if (RegProp != 0 && Len == (sizeof (UINT64) + sizeof(UINT32))) {
+    NsBufBase = fdt64_to_cpu (ReadUnaligned64 (RegProp));
+    NsBufSize = fdt32_to_cpu (ReadUnaligned32 ((UINT32 *)(RegProp + 1)));
+
+    DEBUG ((DEBUG_INFO, "%a: ns buf @ 0x%lx - 0x%lx\n",
+      __FUNCTION__, NsBufBase, NsBufBase + NsBufSize - 1));
+  } else {
+    DEBUG ((DEBUG_ERROR, "%a: Failed to parse FDT reserved-memory node Len %d\n",
+      __FUNCTION__, Len));
+  }
+
+  NewSize -= NsBufSize;
+
   // Make sure the start of DRAM matches our expectation
   ASSERT (FixedPcdGet64 (PcdSystemMemoryBase) == NewBase);
   PcdStatus = PcdSet64S (PcdSystemMemorySize, NewSize);
+  PcdStatus = PcdSet64S (PcdMmBufferBase, NsBufBase);
+  PcdStatus = PcdSet64S (PcdMmBufferSize, (UINT64)NsBufSize);
   ASSERT_RETURN_ERROR (PcdStatus);
 
   return RETURN_SUCCESS;
