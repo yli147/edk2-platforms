@@ -104,6 +104,41 @@ Create a directory $WORKSPACE that would hold source code of the components.
   truncate -s 256M SBSA_FLASH[01].fd
   ```
 
+## Build UEFI with standalone MM based UEFI secure boot
+
+1. Compile standalone MM image
+
+  ```
+  cd $WORKSPACE
+  build -b RELEASE -a AARCH64 -t GCC5 -p edk2-platforms/Platform/Qemu/SbsaQemu/SbsaQemuStandaloneMM.dsc
+  ```
+
+2. Compile TF-A with BL32(Secure Payload)
+
+  Detailed build instructions can be found on the following link:
+  https://git.trustedfirmware.org/TF-A/trusted-firmware-a.git/tree/docs/plat/qemu-sbsa.rst
+
+  Then copy `bl1.bin` and `fip.bin` to the the edk2-non-osi directory:
+
+3. Compile UEFI with UEFI secure boot enabled
+
+  ```
+  cd $WORKSPACE
+  build -b RELEASE -a AARCH64 -t GCC5 -p edk2-platforms/Platform/Qemu/SbsaQemu/SbsaQemu.dsc -DSECURE_BOOT_ENABLE=TRUE
+  ```
+
+  Copy SBSA_FLASH0.fd and SBSA_FLASH1.fd to top $WORKSPACE directory.
+  Then extend the file size to match the machine flash size.
+  ```
+  cp Build/SbsaQemu/RELEASE_GCC5/FV/SBSA_FLASH[01].fd .
+  truncate -s 256M SBSA_FLASH[01].fd
+  ```
+
+  To keep the UEFI variable storage after the succeeding build, use `dd` instead of `cp`.
+  ```
+  dd if=./Build/SbsaQemu/RELEASE_GCC5/FV/SBSA_FLASH0.fd of=./SBSA_FLASH0.fd conv=notrunc bs=2M count=8
+  ```
+
 # Running
 
   The resulting SBSA_FLASH0.fd file will contain Secure flash0 image (TF-A code).
