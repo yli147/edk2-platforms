@@ -529,6 +529,7 @@ DEFINE NETWORK_HTTP_BOOT_ENABLE       = FALSE
   # Ramdisk support
   #
   MdeModulePkg/Universal/Disk/RamDiskDxe/RamDiskDxe.inf
+  ShellPkg/Application/ShellExecTestApp/SA.inf
 
   #
   # UEFI application (Shell Embedded Boot Loader)
