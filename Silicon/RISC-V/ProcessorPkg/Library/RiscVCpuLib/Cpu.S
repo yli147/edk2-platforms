@@ -102,3 +102,34 @@ ASM_FUNC (RiscVReadMachineImplementId)
     csrr a0, RISCV_CSR_MACHINE_MIMPID
     ret
 
+//
+// Set Supervisor mode scratch.
+// @param a0 : Value set to Supervisor mode scratch
+//
+ASM_FUNC (RiscVSetSupervisorScratch)
+    csrrw a1, RISCV_CSR_SUPERVISOR_SSCRATCH, a0
+    ret
+
+//
+// Get Supervisor mode scratch.
+// @retval a0 : Value in Supervisor mode scratch
+//
+ASM_FUNC (RiscVGetSupervisorScratch)
+    csrr a0, RISCV_CSR_SUPERVISOR_SSCRATCH
+    ret
+
+//
+// Set Supervisor mode trap vector.
+// @param a0 : Value set to Supervisor mode trap vector
+//
+ASM_FUNC (RiscVSetSupervisorStvec)
+    csrrw a1, RISCV_CSR_SUPERVISOR_STVEC, a0
+    ret
+
+//
+// Get Supervisor mode scratch.
+// @retval a0 : Value in Supervisor mode trap vector
+//
+ASM_FUNC (RiscVGetSupervisorStvec)
+    csrr a0, RISCV_CSR_SUPERVISOR_STVEC
+    ret
