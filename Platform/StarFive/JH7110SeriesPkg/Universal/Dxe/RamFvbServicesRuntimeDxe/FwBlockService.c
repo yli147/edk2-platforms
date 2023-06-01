@@ -831,7 +831,7 @@ MarkMemoryRangeForRuntimeAccess (
                   BaseAddress,
                   Length
                   );
-
+#if 0 // Will get access denied error, is it related memory initilize ?
   Status = gDS->AddMemorySpace (
                   EfiGcdMemoryTypeSystemMemory,
                   BaseAddress,
@@ -839,7 +839,7 @@ MarkMemoryRangeForRuntimeAccess (
                   EFI_MEMORY_UC | EFI_MEMORY_RUNTIME
                   );
   ASSERT_EFI_ERROR (Status);
-
+#endif
   Status = gBS->AllocatePages (
                   AllocateAddress,
                   EfiRuntimeServicesData,
