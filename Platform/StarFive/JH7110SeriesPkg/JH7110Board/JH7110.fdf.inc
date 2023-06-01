@@ -22,25 +22,8 @@ DEFINE CODE_SIZE         = 0x00800000
 DEFINE CODE_BLOCKS       = 0x800
 DEFINE VARS_BLOCKS       = 0x20
 
-#
-# SEC + opensbi library is the root FW domain.
-# The base address must be round up to log2.
-#
-DEFINE SECFV_OFFSET        = 0x00000000
-DEFINE SECFV_SIZE          = 0x00040000
-DEFINE ROOT_FW_DOMAIN_SIZE = $(SECFV_SIZE)
-
-#
-# Other FV regions are in the second FW domain.
-# The size of memory region must be power of 2.
-# The base address must be aligned with the size.
-#
-# FW memory region
-#
-DEFINE PEIFV_OFFSET                  = 0x00400000
-DEFINE PEIFV_SIZE                    = 0x00180000
-DEFINE FVMAIN_OFFSET                 = 0x00580000
-DEFINE FVMAIN_SIZE                   = 0x00280000
+DEFINE FVMAIN_OFFSET                 = 0x00000000
+DEFINE FVMAIN_SIZE                   = 0x00120000
 
 #
 # EFI Variable memory region.
@@ -105,4 +88,7 @@ SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdBootableHartIndexToId       = {0x1,0x
 SET gSiFiveU5SeriesPlatformsPkgTokenSpaceGuid.PcdNumberofU5Cores       = 4          # Total U5 cores enabled on U540 platform
 SET gSiFiveU5SeriesPlatformsPkgTokenSpaceGuid.PcdE5MCSupported         = True       # E51 MC exists.
 SET gSiFiveU5SeriesPlatformsPkgTokenSpaceGuid.PcdU5UartBase            = 0x10000000 # Serial port base address
+
+SET gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecPeiTempRamBase = 0x43FF0000
+SET gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecPeiTempRamSize = 0x00010000
 
