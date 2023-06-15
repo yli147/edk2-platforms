@@ -17,8 +17,8 @@ The PrePI use FDT to initilziae the memory and platform vironments in EDK2, the 
 
 ### 1. Compile EDK2
    ```
-   git clone https://github.com/yli147.edk2.git edk2 -b vf2_jh7110_devel
-   git clone https://github.com/yli147.edk2-platforms.git edk2-platforms -b vf2_jh7110_devel
+   git clone https://github.com/yli147/edk2.git edk2 -b vf2_jh7110_devel
+   git clone https://github.com/yli147/edk2-platforms.git edk2-platforms -b vf2_jh7110_devel
    pushd edk2
    git submodule update --init
    popd
