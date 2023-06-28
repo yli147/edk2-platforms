@@ -19,6 +19,7 @@
   MdeModulePkg/MdeModulePkg.dec
   MdePkg/MdePkg.dec
   Silicon/StarFive/JH7110/JH7110.dec
+  Platform/StarFive/JH7110SeriesPkg/JH7110SeriesPkg.dec
 
 [LibraryClasses]
   BaseLib

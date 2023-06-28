@@ -149,11 +149,11 @@
   BaseCryptLib|CryptoPkg/Library/BaseCryptLib/BaseCryptLib.inf
 !endif
   RiscVCpuLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVCpuLib/RiscVCpuLib.inf
-  RiscVEdk2SbiLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVEdk2SbiLib/RiscVEdk2SbiLib.inf
+  RiscVSbiLib|MdePkg/Library/BaseRiscVSbiLib/BaseRiscVSbiLib.inf
   RiscVPlatformTimerLib|Platform/StarFive/JH7110SeriesPkg/Library/RiscVPlatformTimerLib/RiscVPlatformTimerLib.inf
   #MachineModeTimerLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVReadMachineModeTimer/MachineModeTimerLib/MachineModeTimerLib.inf
   MachineModeTimerLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVReadMachineModeTimer/EmulatedMachineModeTimerLib/EmulatedMachineModeTimerLib.inf
-  CpuExceptionHandlerLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVExceptionLib/CpuExceptionHandlerDxeLib.inf
+  CpuExceptionHandlerLib|UefiCpuPkg/Library/BaseRiscV64CpuExceptionHandlerLib/BaseRiscV64CpuExceptionHandlerLib.inf
   #Pci dependencies 
   PciHostBridgeLib|Silicon/StarFive/JH7110/Library/PciHostBridgeLib/PciHostBridgeLib.inf
   PciSegmentLib|Silicon/StarFive/JH7110/Library/PciSegmentLib/PciSegmentLib.inf
@@ -233,7 +233,7 @@
   RiscVCoreplexInfoLib|Platform/StarFive/JH7110SeriesPkg/Library/PeiCoreInfoHobLib/PeiCoreInfoHobLib.inf
 
 [LibraryClasses.common.DXE_CORE]
-  TimerLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVTimerLib/BaseRiscVTimerLib.inf
+  TimerLib|UefiCpuPkg/Library/BaseRiscV64CpuTimerLib/BaseRiscV64CpuTimerLib.inf
   HobLib|MdePkg/Library/DxeCoreHobLib/DxeCoreHobLib.inf
   DxeCoreEntryPoint|MdePkg/Library/DxeCoreEntryPoint/DxeCoreEntryPoint.inf
   MemoryAllocationLib|MdeModulePkg/Library/DxeCoreMemoryAllocationLib/DxeCoreMemoryAllocationLib.inf
@@ -250,7 +250,7 @@
 
 [LibraryClasses.common.DXE_RUNTIME_DRIVER]
   PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
-  TimerLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVTimerLib/BaseRiscVTimerLib.inf
+  TimerLib|UefiCpuPkg/Library/BaseRiscV64CpuTimerLib/BaseRiscV64CpuTimerLib.inf
   HobLib|MdePkg/Library/DxeHobLib/DxeHobLib.inf
   DxeCoreEntryPoint|MdePkg/Library/DxeCoreEntryPoint/DxeCoreEntryPoint.inf
   MemoryAllocationLib|MdePkg/Library/UefiMemoryAllocationLib/UefiMemoryAllocationLib.inf
@@ -270,7 +270,7 @@
 
 [LibraryClasses.common.UEFI_DRIVER]
   PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
-  TimerLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVTimerLib/BaseRiscVTimerLib.inf
+  TimerLib|UefiCpuPkg/Library/BaseRiscV64CpuTimerLib/BaseRiscV64CpuTimerLib.inf
   HobLib|MdePkg/Library/DxeHobLib/DxeHobLib.inf
   DxeCoreEntryPoint|MdePkg/Library/DxeCoreEntryPoint/DxeCoreEntryPoint.inf
   MemoryAllocationLib|MdePkg/Library/UefiMemoryAllocationLib/UefiMemoryAllocationLib.inf
@@ -285,7 +285,7 @@
 
 [LibraryClasses.common.DXE_DRIVER]
   PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
-  TimerLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVTimerLib/BaseRiscVTimerLib.inf
+  TimerLib|UefiCpuPkg/Library/BaseRiscV64CpuTimerLib/BaseRiscV64CpuTimerLib.inf
   HobLib|MdePkg/Library/DxeHobLib/DxeHobLib.inf
   MemoryAllocationLib|MdePkg/Library/UefiMemoryAllocationLib/UefiMemoryAllocationLib.inf
   ReportStatusCodeLib|MdeModulePkg/Library/DxeReportStatusCodeLib/DxeReportStatusCodeLib.inf
@@ -305,7 +305,7 @@
 
 [LibraryClasses.common.UEFI_APPLICATION]
   PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
-  TimerLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVTimerLib/BaseRiscVTimerLib.inf
+  TimerLib|UefiCpuPkg/Library/BaseRiscV64CpuTimerLib/BaseRiscV64CpuTimerLib.inf
   HobLib|MdePkg/Library/DxeHobLib/DxeHobLib.inf
   MemoryAllocationLib|MdePkg/Library/UefiMemoryAllocationLib/UefiMemoryAllocationLib.inf
 !ifdef $(DEBUG_ON_SERIAL_PORT)
@@ -495,13 +495,13 @@
   #
   # RISC-V Platform module
   #
-  Platform/StarFive/JH7110SeriesPkg/Universal/Dxe/TimerDxe/TimerDxe.inf
+  UefiCpuPkg/CpuTimerDxeRiscV64/CpuTimerDxeRiscV64.inf
   #Platform/StarFive/JH7110SeriesPkg/Universal/Dxe/RamFvbServicesRuntimeDxe/FvbServicesRuntimeDxe.inf
 
   #
   # RISC-V Core module
   #
-  Silicon/RISC-V/ProcessorPkg/Universal/CpuDxe/CpuDxe.inf
+  UefiCpuPkg/CpuDxeRiscV64/CpuDxeRiscV64.inf
   Silicon/RISC-V/ProcessorPkg/Universal/SmbiosDxe/RiscVSmbiosDxe.inf
   MdeModulePkg/Universal/ResetSystemRuntimeDxe/ResetSystemRuntimeDxe.inf
 
@@ -573,8 +573,6 @@
       PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
   }
   MdeModulePkg/Bus/Pci/PciHostBridgeDxe/PciHostBridgeDxe.inf
-  #Silicon/StarFive/JH7110/Library/PciHostBridgeLib/PciHostBridgeLib.inf
-  #Silicon/StarFive/JH7110/Library/PciSegmentLib/PciSegmentLib.inf
   #
   # NVMe boot devices
   #
