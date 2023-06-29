@@ -517,6 +517,16 @@
   MdeModulePkg/Universal/Console/ConPlatformDxe/ConPlatformDxe.inf
   MdeModulePkg/Universal/Console/ConSplitterDxe/ConSplitterDxe.inf
 
+#
+# Emulator for x64 OpRoms, etc.
+#
+  MultiArchUefiPkg/Drivers/Emulator/Emulator.inf {
+      <LibraryClasses>
+      UnicornEngineLib|unicorn/efi/UnicornEngineLib.inf
+      UnicornStubLib|unicorn/efi/UnicornStubLib.inf
+      UnicornX86Lib|unicorn/efi/UnicornX86Lib.inf
+  }
+
 # No graphic console supported yet.
 #  MdeModulePkg/Universal/Console/GraphicsConsoleDxe/GraphicsConsoleDxe.inf {
 #    <LibraryClasses>
