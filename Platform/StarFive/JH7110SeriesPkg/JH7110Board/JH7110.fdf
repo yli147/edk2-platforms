@@ -142,6 +142,11 @@ INF  MdeModulePkg/Universal/ReportStatusCodeRouter/RuntimeDxe/ReportStatusCodeRo
 INF  MdeModulePkg/Universal/StatusCodeHandler/RuntimeDxe/StatusCodeHandlerRuntimeDxe.inf
 INF  MdeModulePkg/Universal/PCD/Dxe/Pcd.inf
 
+#
+# Emulator for x64 OpRoms, etc.
+#
+INF  MultiArchUefiPkg/Drivers/Emulator/Emulator.inf
+
 INF  MdeModulePkg/Core/RuntimeDxe/RuntimeDxe.inf
 INF  MdeModulePkg/Universal/SecurityStubDxe/SecurityStubDxe.inf
 INF  UefiCpuPkg/CpuIo2Dxe/CpuIo2Dxe.inf
