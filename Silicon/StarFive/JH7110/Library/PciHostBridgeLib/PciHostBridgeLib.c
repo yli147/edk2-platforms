@@ -86,7 +86,6 @@ PCI_ROOT_BRIDGE mPciRootBridges[] = {
     FALSE,                                  // DmaAbove4G
     FALSE,                                  // NoExtendedConfigSpace (true=256 byte config, false=4k)
     FALSE,                                  // ResourceAssigned
-    EFI_PCI_HOST_BRIDGE_COMBINE_MEM_PMEM |
     EFI_PCI_HOST_BRIDGE_MEM64_DECODE,   // AllocationAttributes
     { JH7110_PCI_SEG0_BUSNUM_MIN,
       JH7110_PCI_SEG0_BUSNUM_MAX },        // Bus
@@ -95,9 +94,14 @@ PCI_ROOT_BRIDGE mPciRootBridges[] = {
       MAX_UINT64 - JH7110_PCI_SEG0_PORTIO_OFFSET + 1 },   // Io
     { JH7110_PCI_SEG0_MMIO32_MIN,
       JH7110_PCI_SEG0_MMIO32_MAX, 0},// Mem
+    { MAX_UINT64, 0x0 },                    // MemAbove4G
+    { MAX_UINT32, 0x0 },                    // Pefetchable Mem
+    {JH7110_PCI_SEG0_MMIO64_MIN, JH7110_PCI_SEG0_MMIO64_MAX, 0},  // Pefetchable MemAbove4G
+    #if 0
     {JH7110_PCI_SEG0_MMIO64_MIN, JH7110_PCI_SEG0_MMIO64_MAX, 0},     // MemAbove4G            
     { MAX_UINT64, 0x0 },                    // Pefetchable Mem
     { MAX_UINT64, 0x0 },                    // Pefetchable MemAbove4G
+    #endif
     (EFI_DEVICE_PATH_PROTOCOL *)&mEfiPciRootBridgeDevicePath[0]
   }
 };
