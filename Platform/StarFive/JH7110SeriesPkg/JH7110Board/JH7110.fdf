@@ -195,9 +195,9 @@ INF  FatPkg/EnhancedFatDxe/Fat.inf
 INF  MdeModulePkg/Universal/Disk/UdfDxe/UdfDxe.inf
 INF  Silicon/RISC-V/ProcessorPkg/Universal/FdtDxe/FdtDxe.inf
 
-!ifndef $(SOURCE_DEBUG_ENABLE)
-INF MdeModulePkg/Universal/SerialDxe/SerialDxe.inf
-!endif
+# !ifndef $(SOURCE_DEBUG_ENABLE)
+# INF MdeModulePkg/Universal/SerialDxe/SerialDxe.inf
+# !endif
 
 INF  MdeModulePkg/Universal/SmbiosDxe/SmbiosDxe.inf
 
