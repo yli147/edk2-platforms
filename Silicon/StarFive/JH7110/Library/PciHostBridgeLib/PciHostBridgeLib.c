@@ -52,6 +52,31 @@ STATIC CONST EFI_PCI_ROOT_BRIDGE_DEVICE_PATH mEfiPciRootBridgeDevicePath[] = {
       }
     }
   },
+
+  {
+    {
+      {
+        ACPI_DEVICE_PATH,
+        ACPI_DP,
+        {
+          (UINT8)(sizeof (ACPI_HID_DEVICE_PATH)),
+          (UINT8)(sizeof (ACPI_HID_DEVICE_PATH) >> 8)
+        }
+      },
+      EISA_PNP_ID (0x0A08), // PCI Express
+      1
+    },
+
+    {
+      END_DEVICE_PATH_TYPE,
+      END_ENTIRE_DEVICE_PATH_SUBTYPE,
+      {
+        END_DEVICE_PATH_LENGTH,
+        0
+      }
+    }
+  },
+
 };
 
 GLOBAL_REMOVE_IF_UNREFERENCED
@@ -60,20 +85,26 @@ CHAR16 *mPciHostBridgeLibAcpiAddressSpaceTypeStr[] = {
 };
 
 // These should come from the PCD...
-#define JH7110_PCI_SEG0_BUSNUM_MIN     0x00
-#define JH7110_PCI_SEG0_BUSNUM_MAX     0xFF
-#define JH7110_PCI_SEG0_PORTIO_MIN     0x01
-#define JH7110_PCI_SEG0_PORTIO_MAX     0x00 // MIN>MAX disables PIO
-#define JH7110_PCI_SEG0_PORTIO_OFFSET  0x00
+#define JH7110_PCI_BUSNUM_MIN     0x00
+#define JH7110_PCI_BUSNUM_MAX     0xFF
+#define JH7110_PCI_PORTIO_MIN     0x01
+#define JH7110_PCI_PORTIO_MAX     0x00 // MIN>MAX disables PIO
+#define JH7110_PCI_PORTIO_OFFSET  0x00
 // The bridge thinks its MMIO is here (which means it can't access this area in phy ram)
-#define JH7110_PCI_SEG0_MMIO32_MIN     (0x38000000)
+
+#define JH7110_PCI_SEG0_MMIO32_MIN     (0x30000000)
 #define JH7110_PCI_SEG0_MMIO32_MAX     (JH7110_PCI_SEG0_MMIO32_MIN + 0x8000000)
 // The CPU views it via a window here..
-//#define BCM2711_PCI_SEG0_MMIO32_XLATE   (PCIE_CPU_MMIO_WINDOW - PCIE_TOP_OF_MEM_WIN)
-
 // We might be able to size another region?
-#define JH7110_PCI_SEG0_MMIO64_MIN     (0x980000000)
-#define JH7110_PCI_SEG0_MMIO64_MAX     (0x9c0000000)
+#define JH7110_PCI_SEG0_MMIO64_MIN     (0x900000000)
+#define JH7110_PCI_SEG0_MMIO64_MAX     (0x940000000)
+
+#define JH7110_PCI_SEG1_MMIO32_MIN     (0x38000000)
+#define JH7110_PCI_SEG1_MMIO32_MAX     (JH7110_PCI_SEG1_MMIO32_MIN + 0x8000000)
+// The CPU views it via a window here..
+// We might be able to size another region?
+#define JH7110_PCI_SEG1_MMIO64_MIN     (0x980000000)
+#define JH7110_PCI_SEG1_MMIO64_MAX     (0x9c0000000)
 
 //
 // See description in MdeModulePkg/Include/Library/PciHostBridgeLib.h
@@ -86,23 +117,39 @@ PCI_ROOT_BRIDGE mPciRootBridges[] = {
     FALSE,                                  // DmaAbove4G
     FALSE,                                  // NoExtendedConfigSpace (true=256 byte config, false=4k)
     FALSE,                                  // ResourceAssigned
+    EFI_PCI_HOST_BRIDGE_COMBINE_MEM_PMEM |
     EFI_PCI_HOST_BRIDGE_MEM64_DECODE,   // AllocationAttributes
-    { JH7110_PCI_SEG0_BUSNUM_MIN,
-      JH7110_PCI_SEG0_BUSNUM_MAX },        // Bus
-    { JH7110_PCI_SEG0_PORTIO_MIN,
-      JH7110_PCI_SEG0_PORTIO_MAX,
-      MAX_UINT64 - JH7110_PCI_SEG0_PORTIO_OFFSET + 1 },   // Io
+    { JH7110_PCI_BUSNUM_MIN,
+      JH7110_PCI_BUSNUM_MAX },        // Bus
+    { JH7110_PCI_PORTIO_MIN,
+      JH7110_PCI_PORTIO_MAX,
+      MAX_UINT64 - JH7110_PCI_PORTIO_OFFSET + 1 },   // Io
     { JH7110_PCI_SEG0_MMIO32_MIN,
       JH7110_PCI_SEG0_MMIO32_MAX, 0},// Mem
-    { MAX_UINT64, 0x0 },                    // MemAbove4G
-    { MAX_UINT32, 0x0 },                    // Pefetchable Mem
-    {JH7110_PCI_SEG0_MMIO64_MIN, JH7110_PCI_SEG0_MMIO64_MAX, 0},  // Pefetchable MemAbove4G
-    #if 0
-    {JH7110_PCI_SEG0_MMIO64_MIN, JH7110_PCI_SEG0_MMIO64_MAX, 0},     // MemAbove4G            
+    {JH7110_PCI_SEG0_MMIO64_MIN, JH7110_PCI_SEG0_MMIO64_MAX, 0},     // MemAbove4G
     { MAX_UINT64, 0x0 },                    // Pefetchable Mem
     { MAX_UINT64, 0x0 },                    // Pefetchable MemAbove4G
-    #endif
     (EFI_DEVICE_PATH_PROTOCOL *)&mEfiPciRootBridgeDevicePath[0]
+  },
+  {
+    1,                                      // Segment
+    0,                                      // Supports
+    0,                                      // Attributes
+    FALSE,                                  // DmaAbove4G
+    FALSE,                                  // NoExtendedConfigSpace (true=256 byte config, false=4k)
+    FALSE,                                  // ResourceAssigned
+    EFI_PCI_HOST_BRIDGE_MEM64_DECODE,   // AllocationAttributes
+    { JH7110_PCI_BUSNUM_MIN,
+      JH7110_PCI_BUSNUM_MAX },        // Bus
+    { JH7110_PCI_PORTIO_MIN,
+      JH7110_PCI_PORTIO_MAX,
+      MAX_UINT64 - JH7110_PCI_PORTIO_OFFSET + 1 },   // Io
+    { JH7110_PCI_SEG1_MMIO32_MIN,
+      JH7110_PCI_SEG1_MMIO32_MAX, 0},// Mem
+    {JH7110_PCI_SEG1_MMIO64_MIN, JH7110_PCI_SEG1_MMIO64_MAX, 0},     // MemAbove4G
+    { MAX_UINT64, 0x0 },                    // Pefetchable Mem
+    { MAX_UINT64, 0x0 },                    // Pefetchable MemAbove4G
+    (EFI_DEVICE_PATH_PROTOCOL *)&mEfiPciRootBridgeDevicePath[1]
   }
 };
 

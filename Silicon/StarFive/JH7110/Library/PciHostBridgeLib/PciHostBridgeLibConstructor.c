@@ -277,26 +277,27 @@ JH7110PciHostBridgeLibConstructor (
   IN EFI_SYSTEM_TABLE *SystemTable
   )
 {
-  UINT32		PortIndex = 1;
+  UINT32		PortIndex;
 
   DEBUG ((DEBUG_ERROR, "PCIe RootBridge constructor\n"));
-  PcieSTGInit(PortIndex);
-  RegWrite(SYS_CLK_BASE + SYS_CLK_NOC_OFFSET, 1 << 31);
-  PcieClockInit(PortIndex);
-  PcieResetDeassert(PortIndex);
-  PcieGpioResetSet(PortIndex, 0);
-  PcieFuncSet(PortIndex);
+  for (PortIndex = 0; PortIndex < 2; PortIndex++) {
+    PcieSTGInit(PortIndex);
+    RegWrite(SYS_CLK_BASE + SYS_CLK_NOC_OFFSET, 1 << 31);
+    PcieClockInit(PortIndex);
+    PcieResetDeassert(PortIndex);
+    PcieGpioResetSet(PortIndex, 0);
+    PcieFuncSet(PortIndex);
   
-  PcieAtrInit(PortIndex, PCIE_CFG_BASE[PortIndex],
-     0, XR3_PCI_ECAM_SIZE, 1);
-  PcieAtrInit(PortIndex, PCI_MEMREGION_32[PortIndex],
-     PCI_MEMREGION_32[PortIndex], PCI_MEMREGION_SIZE[0], 0);
-  PcieAtrInit(PortIndex, PCI_MEMREGION_64[PortIndex],
-     PCI_MEMREGION_64[PortIndex], PCI_MEMREGION_SIZE[1], 0);
-  PcieGpioResetSet(PortIndex, 1);
-  MicroSecondDelay(300);
+    PcieAtrInit(PortIndex, PCIE_CFG_BASE[PortIndex],
+       0, XR3_PCI_ECAM_SIZE, 1);
+    PcieAtrInit(PortIndex, PCI_MEMREGION_32[PortIndex],
+      PCI_MEMREGION_32[PortIndex], PCI_MEMREGION_SIZE[0], 0);
+    PcieAtrInit(PortIndex, PCI_MEMREGION_64[PortIndex],
+      PCI_MEMREGION_64[PortIndex], PCI_MEMREGION_SIZE[1], 0);
+    PcieGpioResetSet(PortIndex, 1);
+    MicroSecondDelay(300);
 
-  DEBUG ((DEBUG_ERROR, "PCIe port %d init\n", PortIndex));
-
+    DEBUG ((DEBUG_ERROR, "PCIe port %d init\n", PortIndex));
+  }
   return EFI_SUCCESS;
 }
