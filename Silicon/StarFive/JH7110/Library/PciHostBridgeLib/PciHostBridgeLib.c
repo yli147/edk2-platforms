@@ -146,9 +146,14 @@ PCI_ROOT_BRIDGE mPciRootBridges[] = {
       MAX_UINT64 - JH7110_PCI_PORTIO_OFFSET + 1 },   // Io
     { JH7110_PCI_SEG1_MMIO32_MIN,
       JH7110_PCI_SEG1_MMIO32_MAX, 0},// Mem
+    { MAX_UINT64, 0x0 },     // MemAbove4G
+    { MAX_UINT64, 0x0 },     // Pefetchable Mem
+    {JH7110_PCI_SEG1_MMIO64_MIN, JH7110_PCI_SEG1_MMIO64_MAX, 0}, // Pefetchable MemAbove4G
+#if 0
     {JH7110_PCI_SEG1_MMIO64_MIN, JH7110_PCI_SEG1_MMIO64_MAX, 0},     // MemAbove4G
     { MAX_UINT64, 0x0 },                    // Pefetchable Mem
     { MAX_UINT64, 0x0 },                    // Pefetchable MemAbove4G
+#endif
     (EFI_DEVICE_PATH_PROTOCOL *)&mEfiPciRootBridgeDevicePath[1]
   }
 };
