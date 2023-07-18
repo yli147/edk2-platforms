@@ -93,14 +93,16 @@ PciSegmentLibGetConfigBase (
        * There can only be a single device on bus 1 (downstream of root).
        * Subsequent busses (behind a PCIe switch) can have more.
        */
-      if (!Bus && Write && ((Offset == 0x10) || (Offset == 0x14))) {
-         return 0xFFFFFFFF;
-      }
       if (Dev > 0)
       	return 0xFFFFFFFF;
 
       return Base + Segment * 0x80000000 + Address + Offset;
+  } else {
+      if (Write && ((Offset == 0x10) || (Offset == 0x14))) {
+         return 0xFFFFFFFF;
+      }
   }
+
   return Base + Segment * 0x80000000 + Offset;
 }
 
@@ -176,6 +178,11 @@ PciSegmentLibWriteWorker (
 
   EfiAcquireLock (&mPciSegmentReadWriteLock);
   Base = PciSegmentLibGetConfigBase (Address, Segment, 1);
+
+  if (Base == 0xFFFFFFFF) {
+    EfiReleaseLock (&mPciSegmentReadWriteLock);
+    return Data;
+  }
 
   switch (Width) {
   case PciCfgWidthUint8:
