@@ -51,6 +51,7 @@ READ_ENABLED_CAP   = TRUE
 READ_STATUS        = TRUE
 READ_LOCK_CAP      = TRUE
 READ_LOCK_STATUS   = TRUE
+FvNameGuid         = 27A72E80-3118-4c0c-8673-AA5B4EFA9613
 
 APRIORI DXE {
   INF  MdeModulePkg/Universal/DevicePathDxe/DevicePathDxe.inf
@@ -211,7 +212,6 @@ READ_ENABLED_CAP   = TRUE
 READ_STATUS        = TRUE
 READ_LOCK_CAP      = TRUE
 READ_LOCK_STATUS   = TRUE
-FvNameGuid         = 27A72E80-3118-4c0c-8673-AA5B4EFA9613
 
 INF OvmfPkg/RiscVVirt/Sec/SecMain.inf
 
