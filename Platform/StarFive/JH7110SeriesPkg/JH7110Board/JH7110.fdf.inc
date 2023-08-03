@@ -23,7 +23,7 @@ DEFINE CODE_BLOCKS       = 0x800
 DEFINE VARS_BLOCKS       = 0x20
 
 DEFINE FVMAIN_OFFSET                 = 0x00000000
-DEFINE FVMAIN_SIZE                   = 0x00120000
+DEFINE FVMAIN_SIZE                   = 0x00280000
 
 #
 # EFI Variable memory region.
