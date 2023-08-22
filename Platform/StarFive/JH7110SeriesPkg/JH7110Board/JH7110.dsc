@@ -597,6 +597,12 @@
   !include NetworkPkg/Network.dsc.inc
 
   #
+  # Boot services memory rellocation
+  # - MMC driver DMA can only work with 32-bit address
+  #
+  Silicon/StarFive/JH7110/Driver/BootServices/BootServices.inf
+
+  #
   # sdio/mmc support
   #
   EmbeddedPkg/Universal/MmcDxe/MmcDxe.inf
