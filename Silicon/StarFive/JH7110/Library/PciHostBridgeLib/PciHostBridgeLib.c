@@ -93,14 +93,14 @@ CHAR16 *mPciHostBridgeLibAcpiAddressSpaceTypeStr[] = {
 // The bridge thinks its MMIO is here (which means it can't access this area in phy ram)
 
 #define JH7110_PCI_SEG0_MMIO32_MIN     (0x30000000)
-#define JH7110_PCI_SEG0_MMIO32_MAX     (JH7110_PCI_SEG0_MMIO32_MIN + 0x8000000)
+#define JH7110_PCI_SEG0_MMIO32_MAX     (JH7110_PCI_SEG0_MMIO32_MIN + 0x7FFFFFF)
 // The CPU views it via a window here..
 // We might be able to size another region?
 #define JH7110_PCI_SEG0_MMIO64_MIN     (0x900000000)
 #define JH7110_PCI_SEG0_MMIO64_MAX     (0x940000000)
 
 #define JH7110_PCI_SEG1_MMIO32_MIN     (0x38000000)
-#define JH7110_PCI_SEG1_MMIO32_MAX     (JH7110_PCI_SEG1_MMIO32_MIN + 0x8000000)
+#define JH7110_PCI_SEG1_MMIO32_MAX     (JH7110_PCI_SEG1_MMIO32_MIN + 0x7FFFFFF)
 // The CPU views it via a window here..
 // We might be able to size another region?
 #define JH7110_PCI_SEG1_MMIO64_MIN     (0x980000000)
