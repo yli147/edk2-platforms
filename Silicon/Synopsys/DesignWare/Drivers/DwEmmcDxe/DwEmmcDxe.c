@@ -291,6 +291,8 @@ SendCommand (
   MmioWrite32 (DWEMMC_CMDARG, Argument);
   MmioWrite32 (DWEMMC_CMD, MmcCmd);
 
+  //DEBUG ((DEBUG_INFO, "send cmd %d\n", MmcCmd & 0x3f));
+
   ErrMask = DWEMMC_INT_EBE | DWEMMC_INT_HLE | DWEMMC_INT_RTO |
             DWEMMC_INT_RCRC | DWEMMC_INT_RE;
   ErrMask |= DWEMMC_INT_DCRC | DWEMMC_INT_DRT | DWEMMC_INT_SBE;
@@ -614,18 +616,19 @@ DwEmmcSetIos (
     switch (TimingMode) {
     case EMMCHS52DDR1V2:
     case EMMCHS52DDR1V8:
-      //Data |= 1 << 16;
-      //break;
-      return EFI_UNSUPPORTED;
+      Data |= 1 << 16;
+      break;
     case EMMCHS52:
     case EMMCHS26:
       Data &= ~(1 << 16);
       break;
     default:
-      break;
+      return EFI_UNSUPPORTED;
     }
     MmioWrite32 (DWEMMC_UHSREG, Data);
   }
+
+  DEBUG ((DEBUG_INFO, "Set bus width %d clock %d\n",BusWidth, BusClockFreq));
 
   switch (BusWidth) {
   case 1:
