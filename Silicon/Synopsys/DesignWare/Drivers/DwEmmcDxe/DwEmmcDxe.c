@@ -719,6 +719,9 @@ DwEmmcSetIos (
     switch (TimingMode) {
     case EMMCHS52DDR1V2:
     case EMMCHS52DDR1V8:
+      if (!FixedPcdGetBool (PcdDwEmmcDxeUHSEn)) {
+        return EFI_UNSUPPORTED;
+      }
       Data |= 1 << 16;
       break;
     case EMMCHS52:
