@@ -140,7 +140,7 @@
   HttpLib|MdeModulePkg/Library/DxeHttpLib/DxeHttpLib.inf
 !endif
 
-# ACPI not supported yet.
+  # ACPI not supported yet.
   #S3BootScriptLib|MdeModulePkg/Library/PiDxeS3BootScriptLib/DxeS3BootScriptLib.inf
   SmbusLib|MdePkg/Library/BaseSmbusLibNull/BaseSmbusLibNull.inf
   OrderedCollectionLib|MdePkg/Library/BaseOrderedCollectionRedBlackTreeLib/BaseOrderedCollectionRedBlackTreeLib.inf
@@ -155,7 +155,7 @@
   #MachineModeTimerLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVReadMachineModeTimer/MachineModeTimerLib/MachineModeTimerLib.inf
   MachineModeTimerLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVReadMachineModeTimer/EmulatedMachineModeTimerLib/EmulatedMachineModeTimerLib.inf
   CpuExceptionHandlerLib|UefiCpuPkg/Library/BaseRiscV64CpuExceptionHandlerLib/BaseRiscV64CpuExceptionHandlerLib.inf
-  #Pci dependencies 
+  # Pci dependencies 
   PciHostBridgeLib|Silicon/StarFive/JH7110/Library/PciHostBridgeLib/PciHostBridgeLib.inf
   PciSegmentLib|Silicon/StarFive/JH7110/Library/PciSegmentLib/PciSegmentLib.inf
   TimerLib|UefiCpuPkg/Library/BaseRiscV64CpuTimerLib/BaseRiscV64CpuTimerLib.inf
@@ -170,69 +170,8 @@
   DebugLib|MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
 !endif
 
-  ReportStatusCodeLib|MdeModulePkg/Library/PeiReportStatusCodeLib/PeiReportStatusCodeLib.inf
   ExtractGuidedSectionLib|MdePkg/Library/BaseExtractGuidedSectionLib/BaseExtractGuidedSectionLib.inf
-  Edk2OpensbiPlatformWrapperLib|Platform/RISC-V/PlatformPkg/Library/Edk2OpensbiPlatformWrapperLib/Edk2OpensbiPlatformWrapperLib.inf
   RiscVSpecialPlatformLib|Platform/StarFive/JH7110SeriesPkg/JH7110Board/Library/RiscVSpecialPlatformLib/RiscVSpecialPlatformLib.inf
-
-!ifdef $(SOURCE_DEBUG_ENABLE)
-  DebugAgentLib|SourceLevelDebugPkg/Library/DebugAgent/SecPeiDebugAgentLib.inf
-!endif
-
-  MemoryAllocationLib|MdePkg/Library/PeiMemoryAllocationLib/PeiMemoryAllocationLib.inf
-
-#
-# OpenSBi Platform Library
-#
-  RiscVOpensbiPlatformLib|Platform/RISC-V/PlatformPkg/Library/OpensbiPlatformLib/OpensbiPlatformLib.inf
-
-[LibraryClasses.common.PEI_CORE]
-  HobLib|MdePkg/Library/PeiHobLib/PeiHobLib.inf
-  PeiServicesTablePointerLib|Silicon/RISC-V/ProcessorPkg/Library/PeiServicesTablePointerLibOpenSbi/PeiServicesTablePointerLibOpenSbi.inf
-  RiscVFirmwareContextLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVFirmwareContextSscratchLib/RiscVFirmwareContextSscratchLib.inf
-  PeiServicesLib|MdePkg/Library/PeiServicesLib/PeiServicesLib.inf
-  MemoryAllocationLib|MdePkg/Library/PeiMemoryAllocationLib/PeiMemoryAllocationLib.inf
-  ReportStatusCodeLib|MdeModulePkg/Library/PeiReportStatusCodeLib/PeiReportStatusCodeLib.inf
-  OemHookStatusCodeLib|MdeModulePkg/Library/OemHookStatusCodeLibNull/OemHookStatusCodeLibNull.inf
-  PeCoffGetEntryPointLib|MdePkg/Library/BasePeCoffGetEntryPointLib/BasePeCoffGetEntryPointLib.inf
-!ifdef $(DEBUG_ON_SERIAL_PORT)
-  DebugLib|MdePkg/Library/BaseDebugLibSerialPort/BaseDebugLibSerialPort.inf
-!else
-  DebugLib|MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
-!endif
-  PeCoffLib|MdePkg/Library/BasePeCoffLib/BasePeCoffLib.inf
-  # RISC-V platform PEI core entry point.
-  PeiCoreEntryPoint|Platform/RISC-V/PlatformPkg/Library/PeiCoreEntryPoint/PeiCoreEntryPoint.inf
-  PlatformSecPpiLib|Platform/StarFive/JH7110SeriesPkg/Library/PlatformSecPpiLib/PlatformSecPpiLib.inf
-
-[LibraryClasses.common.PEIM]
-  HobLib|MdePkg/Library/PeiHobLib/PeiHobLib.inf
-  PeiServicesTablePointerLib|Silicon/RISC-V/ProcessorPkg/Library/PeiServicesTablePointerLibOpenSbi/PeiServicesTablePointerLibOpenSbi.inf
-  RiscVFirmwareContextLib|Silicon/RISC-V/ProcessorPkg/Library/RiscVFirmwareContextSscratchLib/RiscVFirmwareContextSscratchLib.inf
-  PeiServicesLib|MdePkg/Library/PeiServicesLib/PeiServicesLib.inf
-  MemoryAllocationLib|MdePkg/Library/PeiMemoryAllocationLib/PeiMemoryAllocationLib.inf
-  PeimEntryPoint|MdePkg/Library/PeimEntryPoint/PeimEntryPoint.inf
-  ReportStatusCodeLib|MdeModulePkg/Library/PeiReportStatusCodeLib/PeiReportStatusCodeLib.inf
-  OemHookStatusCodeLib|MdeModulePkg/Library/OemHookStatusCodeLibNull/OemHookStatusCodeLibNull.inf
-  PeCoffGetEntryPointLib|MdePkg/Library/BasePeCoffGetEntryPointLib/BasePeCoffGetEntryPointLib.inf
-!ifdef $(DEBUG_ON_SERIAL_PORT)
-  DebugLib|MdePkg/Library/BaseDebugLibSerialPort/BaseDebugLibSerialPort.inf
-!else
-  DebugLib|MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
-!endif
-  PeCoffLib|MdePkg/Library/BasePeCoffLib/BasePeCoffLib.inf
-  PeiResourcePublicationLib|MdePkg/Library/PeiResourcePublicationLib/PeiResourcePublicationLib.inf
-  ExtractGuidedSectionLib|MdePkg/Library/PeiExtractGuidedSectionLib/PeiExtractGuidedSectionLib.inf
-!ifdef $(SOURCE_DEBUG_ENABLE)
-  DebugAgentLib|SourceLevelDebugPkg/Library/DebugAgent/SecPeiDebugAgentLib.inf
-!endif
-  FirmwareContextProcessorSpecificLib|Platform/RISC-V/PlatformPkg/Library/FirmwareContextProcessorSpecificLib/FirmwareContextProcessorSpecificLib.inf
-
-#
-# RISC-V core libraries
-#
-  SiliconSiFiveU54CoreInfoLib|Silicon/SiFive/U54/Library/PeiCoreInfoHobLib/PeiCoreInfoHobLib.inf
-  RiscVCoreplexInfoLib|Platform/StarFive/JH7110SeriesPkg/Library/PeiCoreInfoHobLib/PeiCoreInfoHobLib.inf
 
 [LibraryClasses.common.DXE_CORE]
   TimerLib|UefiCpuPkg/Library/BaseRiscV64CpuTimerLib/BaseRiscV64CpuTimerLib.inf
@@ -450,7 +389,6 @@
   #
   # SEC Phase modules
   #
-  # Platform/RISC-V/PlatformPkg/Universal/Sec/SecMain.inf
   OvmfPkg/RiscVVirt/Sec/SecMain.inf {
     <LibraryClasses>
       ExtractGuidedSectionLib|EmbeddedPkg/Library/PrePiExtractGuidedSectionLib/PrePiExtractGuidedSectionLib.inf
@@ -460,27 +398,6 @@
       PrePiHobListPointerLib|OvmfPkg/RiscVVirt/Library/PrePiHobListPointerLib/PrePiHobListPointerLib.inf
       MemoryAllocationLib|EmbeddedPkg/Library/PrePiMemoryAllocationLib/PrePiMemoryAllocationLib.inf
   }
-
-  #
-  # PEI Phase modules
-  #
-  MdeModulePkg/Core/Pei/PeiMain.inf
-  MdeModulePkg/Universal/PCD/Pei/Pcd.inf  {
-    <LibraryClasses>
-      PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
-  }
-  #MdeModulePkg/Universal/ReportStatusCodeRouter/Pei/ReportStatusCodeRouterPei.inf
-  #MdeModulePkg/Universal/StatusCodeHandler/Pei/StatusCodeHandlerPei.inf
-  MdeModulePkg/Core/DxeIplPeim/DxeIpl.inf {
-    <LibraryClasses>
-    NULL|MdeModulePkg/Library/LzmaCustomDecompressLib/LzmaCustomDecompressLib.inf
-  }
-
-  Platform/RISC-V/PlatformPkg/Universal/Pei/PlatformPei/PlatformPei.inf {
-    <LibraryClasses>
-      PcdLib|MdePkg/Library/PeiPcdLib/PeiPcdLib.inf
-  }
-  Platform/RISC-V/PlatformPkg/Universal/FdtPeim/FdtPeim.inf
 
   #
   # DXE Phase modules
@@ -514,7 +431,6 @@
 
   UefiCpuPkg/CpuIo2Dxe/CpuIo2Dxe.inf
   MdeModulePkg/Universal/Metronome/Metronome.inf
-  # MdeModulePkg/Universal/BdsDxe/BdsDxe.inf
   MdeModulePkg/Universal/ResetSystemRuntimeDxe/ResetSystemRuntimeDxe.inf {
     <LibraryClasses>
       ResetSystemLib|MdeModulePkg/Library/BaseResetSystemLibNull/BaseResetSystemLibNull.inf
@@ -551,9 +467,9 @@
   MdeModulePkg/Universal/Console/ConPlatformDxe/ConPlatformDxe.inf
   MdeModulePkg/Universal/Console/ConSplitterDxe/ConSplitterDxe.inf
 
-#
-# Emulator for x64 OpRoms, etc.
-#
+  #
+  # Emulator for x64 OpRoms, etc.
+  #
   MultiArchUefiPkg/Drivers/Emulator/Emulator.inf {
       <LibraryClasses>
       UnicornEngineLib|unicorn/efi/UnicornEngineLib.inf
@@ -561,7 +477,7 @@
       UnicornX86Lib|unicorn/efi/UnicornX86Lib.inf
   }
 
-# No graphic console supported yet.
+  # No graphic console supported yet.
   MdeModulePkg/Universal/Console/GraphicsConsoleDxe/GraphicsConsoleDxe.inf {
   <LibraryClasses>
       PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
@@ -617,14 +533,15 @@
       GCC:*_*_*_CC_FLAGS       = -DCONFIG_DWSDMMC
   }
 
-   #
-   # PCIe support
-   #
+  #
+  # PCIe support
+  #
    MdeModulePkg/Bus/Pci/PciBusDxe/PciBusDxe.inf {
     <LibraryClasses>
       PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
   }
   MdeModulePkg/Bus/Pci/PciHostBridgeDxe/PciHostBridgeDxe.inf
+
   #
   # NVMe boot devices
   #
@@ -690,7 +607,6 @@
   SecurityPkg/VariableAuthenticated/SecureBootConfigDxe/SecureBootConfigDxe.inf
 !endif
 
-#  MdeModulePkg/Application/UiApp/UiApp.inf
   MdeModulePkg/Logo/LogoDxe.inf
   MdeModulePkg/Application/UiApp/UiApp.inf {
     <LibraryClasses>

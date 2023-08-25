@@ -23,7 +23,6 @@ NumBlocks     = $(FW_BLOCKS)
 
 $(FVMAIN_OFFSET)|$(FVMAIN_SIZE)
 gUefiOvmfPkgTokenSpaceGuid.PcdOvmfDxeMemFvBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfDxeMemFvSize
-# gUefiRiscVPlatformPkgTokenSpaceGuid.PcdRiscVDxeFvBase|gUefiRiscVPlatformPkgTokenSpaceGuid.PcdRiscVDxeFvSize
 
 FV = FVMAIN_COMPACT
 
@@ -186,8 +185,6 @@ INF  MdeModulePkg/Bus/Usb/UsbMassStorageDxe/UsbMassStorageDxe.inf
 #
 INF  MdeModulePkg/Logo/LogoDxe.inf
 
-# INF  MdeModulePkg/Application/UiApp/UiApp.inf
-
 #
 # QSPI Flash Support
 #
@@ -232,21 +229,6 @@ FILE FV_IMAGE = 9E21FD93-9C72-4c15-8C4B-E77F1DB2D792 {
     PE32     PE32   Align=4K $(INF_OUTPUT)/$(MODULE_NAME).efi
     UI       STRING ="$(MODULE_NAME)" Optional
     VERSION  STRING ="$(INF_VERSION)" Optional BUILD_NUM=$(BUILD_NUMBER)
-  }
-
-[Rule.Common.PEI_CORE]
-  FILE PEI_CORE = $(NAMED_GUID) {
-    PE32     PE32   Align=4K    $(INF_OUTPUT)/$(MODULE_NAME).efi
-    UI       STRING ="$(MODULE_NAME)" Optional
-    VERSION  STRING ="$(INF_VERSION)" Optional BUILD_NUM=$(BUILD_NUMBER)
-  }
-
-[Rule.Common.PEIM]
-  FILE PEIM = $(NAMED_GUID) {
-     PEI_DEPEX PEI_DEPEX Optional        $(INF_OUTPUT)/$(MODULE_NAME).depex
-     PE32     PE32   Align=4K         $(INF_OUTPUT)/$(MODULE_NAME).efi
-     UI       STRING="$(MODULE_NAME)" Optional
-     VERSION  STRING="$(INF_VERSION)" Optional BUILD_NUM=$(BUILD_NUMBER)
   }
 
 [Rule.Common.DXE_CORE]

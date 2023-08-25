@@ -13,15 +13,6 @@ DEFINE FW_BASE_ADDRESS   = 0x40200000
 DEFINE FW_SIZE           = 0x00900000
 DEFINE FW_BLOCKS         = 0x900
 
-#
-# 0x000000-0x7DFFFF code
-# 0x7E0000-0x800000 variables
-#
-DEFINE CODE_BASE_ADDRESS = 0x40000000
-DEFINE CODE_SIZE         = 0x00800000
-DEFINE CODE_BLOCKS       = 0x800
-DEFINE VARS_BLOCKS       = 0x20
-
 DEFINE FVMAIN_OFFSET                 = 0x00000000
 DEFINE FVMAIN_SIZE                   = 0x00280000
 
@@ -44,35 +35,6 @@ DEFINE VARS_FTW_SPARE_SIZE           = 0x00010000
 DEFINE DTB_OFFSET                    = 0x00840000
 DEFINE DTB_SIZE                      = 0x00010000
 
-#
-# Scratch area memory region
-#
-DEFINE SCRATCH_OFFSET                = 0x00860000
-DEFINE SCRATCH_SIZE                  = 0x00010000
-
-
-DEFINE FW_DOMAIN_SIZE    = $(FVMAIN_OFFSET) + $(FVMAIN_SIZE) - $(PEIFV_OFFSET)
-DEFINE VARIABLE_FW_SIZE  = $(VARS_FTW_SPARE_OFFSET) + $(VARS_FTW_SPARE_SIZE) - $(VARS_OFFSET)
-
-SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdRootFirmwareDomainBaseAddress = $(CODE_BASE_ADDRESS) + $(SECFV_OFFSET)
-SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdRootFirmwareDomainSize        = $(ROOT_FW_DOMAIN_SIZE)
-SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdFirmwareDomainBaseAddress     = $(CODE_BASE_ADDRESS) + $(PEIFV_OFFSET)
-SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdFirmwareDomainSize            = $(FW_DOMAIN_SIZE)
-
-SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdVariableFdBaseAddress = $(FW_BASE_ADDRESS) + $(VARS_OFFSET)
-SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdVariableFdSize        = $(VARS_SIZE) + $(VARS_FTW_WORKING_SIZE) + $(VARS_FTW_SPARE_SIZE)
-SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdVariableFdBlockSize   = $(BLOCK_SIZE)
-SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdVariableFirmwareRegionBaseAddress = $(CODE_BASE_ADDRESS) + $(VARS_OFFSET)
-SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdVariableFirmwareRegionSize        = $(VARIABLE_FW_SIZE)
-
-SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdOpenSbiStackSize = 8192
-SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdScratchRamBase   = $(CODE_BASE_ADDRESS) + $(SCRATCH_OFFSET)
-SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdScratchRamSize   = $(SCRATCH_SIZE)
-SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdTemporaryRamBase = $(CODE_BASE_ADDRESS) + $(FW_SIZE)
-SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdTemporaryRamSize = 0x10000
-
-
-SET gUefiRiscVPkgTokenSpaceGuid.PcdRiscVMachineTimerFrequencyInHerz    = 4000000
 SET gSiFiveU5SeriesPlatformsPkgTokenSpaceGuid.PcdU5PlatformSystemClock = 24000000 # 1GHz system clock
 SET gUefiRiscVPlatformPkgTokenSpaceGuid.PcdBootHartId                  = 1          # Boot hart ID
 
