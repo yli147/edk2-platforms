@@ -1,0 +1,12 @@
+// /** @file
+// StarFive Vision Five 2 Package Localized Strings and Content.
+//
+// Copyright (c) 2023, StarFive Technology Co., Ltd. All rights reserved.<BR>
+//
+// SPDX-License-Identifier: BSD-2-Clause-Patent
+//
+// **/
+
+#string STR_PACKAGE_ABSTRACT            #language en-US "Provides StarFive JH7110 platform modules and libraries"
+
+#string STR_PACKAGE_DESCRIPTION         #language en-US "This Package StarFive JH7110 platform modules and libraries."

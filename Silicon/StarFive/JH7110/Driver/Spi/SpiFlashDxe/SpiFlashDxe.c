@@ -1,6 +1,8 @@
 /** @file
  *
- *  Copyright (c) 2023, Yuin Yee, Chew (John) <yuinyee.chew@starfivetech.com>.
+ *  Copyright (c) 2011 - 2014, ARM Ltd. All rights reserved.<BR>
+ *  Copyright (c) 2017 Marvell International Ltd.<BR>
+ *  Copyright (c) 2023, StarFive Technology Co., Ltd. All rights reserved.<BR>
  *
  *  SPDX-License-Identifier: BSD-2-Clause-Patent
  *

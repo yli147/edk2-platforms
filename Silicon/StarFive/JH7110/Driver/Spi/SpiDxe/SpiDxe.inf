@@ -1,6 +1,11 @@
+## @file
 #
-# SPDX-License-Identifier: BSD-2-Clause-Patent
+#  Copyright (c) 2017 Marvell International Ltd.<BR>
+#  Copyright (c) 2023, StarFive Technology Co., Ltd. All rights reserved.<BR>
 #
+#  SPDX-License-Identifier: BSD-2-Clause-Patent
+#
+##
 
 [Defines]
   INF_VERSION                    = 0x00010005

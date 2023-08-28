@@ -1,5 +1,5 @@
 // /** @file
-// StarFive JH7110 Series Package Localized Strings and Content.
+// StarFive VisionFive 2 Package Localized Strings and Content.
 //
 // Copyright (c) 2023, StarFive Technology Co., Ltd. All rights reserved.<BR>
 //
@@ -9,4 +9,4 @@
 
 #string STR_PROPERTIES_PACKAGE_NAME
 #language en-US
-"StarFive JH7110 series platform package"
+"StarFive JH7110 board package"

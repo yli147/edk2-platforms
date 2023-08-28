@@ -1,9 +1,12 @@
 /** @file
-
-  Copyright (c) 
-  SPDX-License-Identifier: BSD-2-Clause-Patent
-
-**/
+ *
+ *  Copyright (c) 2011 - 2014, ARM Ltd. All rights reserved.<BR>
+ *  Copyright (c) 2017 Marvell International Ltd.<BR>
+ *  Copyright (c) 2023, StarFive Technology Co., Ltd. All rights reserved.<BR>
+ *
+ *  SPDX-License-Identifier: BSD-2-Clause-Patent
+ *
+ **/
 
 #ifndef __SPI_APB_DXE_H__
 #define __SPI_APB_DXE_H__

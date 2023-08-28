@@ -1,0 +1,36 @@
+## @file
+#  Device tree description of the StarFive VisionFive 2 platform
+#
+#  Copyright (c) 2023, StarFive Technology Co., Ltd. All rights reserved.<BR>
+#
+#  SPDX-License-Identifier: BSD-2-Clause-Patent
+#
+##
+
+[Defines]
+  INF_VERSION    = 0x0001001A
+  BASE_NAME      = JH7110DeviceTree
+  FILE_GUID      = 25462CDA-221F-47DF-AC1D-259CFAA4E326 #gDtPlatformDefaultDtbFileGuid
+  MODULE_TYPE    = USER_DEFINED
+  VERSION_STRING = 1.0
+
+[Sources]
+  StarFive_clk.dtsi
+  StarFive_hdmi.dtsi
+  StarFive_JH7110.dtsi
+  StarFive_pwmdac.dtsi
+  StarFive_VisionFive2.dts
+  StarFive_VisionFive2.dtsi
+  JH7110-rst.h
+  JH7110-power.h
+  JH7110-clk-gen.h
+  JH7110-clk-isp.h
+  JH7110-clk-vout.h
+  JH7110-pin-ctrl.h
+  led.h
+  irq.h
+  gpio.h
+  thermal.h
+
+[Packages]
+  MdePkg/MdePkg.dec
