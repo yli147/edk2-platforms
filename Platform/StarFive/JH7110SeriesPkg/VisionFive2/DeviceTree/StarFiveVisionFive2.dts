@@ -8,8 +8,8 @@
 **/
 
 /dts-v1/;
-#include "StarFive_VisionFive2.dtsi"
-#include "StarFive_hdmi.dtsi"
+#include "StarFiveVisionFive2.dtsi"
+#include "StarFiveHdmi.dtsi"
 
 / {
     model = "StarFive VisionFive V2";

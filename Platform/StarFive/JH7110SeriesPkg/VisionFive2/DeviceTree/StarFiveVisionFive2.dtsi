@@ -8,11 +8,11 @@
 **/
 
 /dts-v1/;
-#include "StarFive_JH7110.dtsi"
-#include "StarFive_pwmdac.dtsi"
-#include "JH7110-pin-ctrl.h"
-#include "gpio.h"
-#include "led.h"
+#include "StarFiveJH7110.dtsi"
+#include "StarFivePwmDac.dtsi"
+#include "JH7110PinCtrl.h"
+#include "Gpio.h"
+#include "Led.h"
 
 / {
     model = "StarFive VisionFive V2";

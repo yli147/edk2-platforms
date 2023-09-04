@@ -8,14 +8,14 @@
 **/
 
 /dts-v1/;
-#include "StarFive_clk.dtsi"
-#include "JH7110-clk-gen.h"
-#include "JH7110-clk-vout.h"
-#include "JH7110-clk-isp.h"
-#include "JH7110-rst.h"
-#include "JH7110-power.h"
-#include "thermal.h"
-#include "irq.h"
+#include "StarFiveClk.dtsi"
+#include "JH7110ClkGen.h"
+#include "JH7110ClkVout.h"
+#include "JH7110ClkIsp.h"
+#include "JH7110Rst.h"
+#include "JH7110Power.h"
+#include "Thermal.h"
+#include "Irq.h"
 
 / {
     compatible = "starfive,jh7110";
